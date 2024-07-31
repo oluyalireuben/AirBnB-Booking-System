@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Admin Dashboard</title>
+</head>
+<body>
+<div class="container">
+  <h2>Welcome, Admin</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Booking ID</th>
+      <th>Username</th>
+      <th>Room</th>
+      <th>Days</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+                session_start();
+                $conn = new mysqli('localhost', 'root', '', 'airbnb');
+
+                if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT * FROM bookings";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+    echo "<tr>";
+      echo "<td>" . $row['id'] . "</td>";
+      echo "<td>" . $row['username'] . "</td>";
+      echo "<td>" . $row['room'] . "</td>";
+      echo "<td>" . $row['days'] . "</td>";
+      echo "<td>" . $row['status'] . "</td>";
+      echo "<td>
+        <form action='server.php' method='POST' style='display:inline;'>
+          <input type='hidden' name='booking_id' value='" . $row['id'] . "'>
+          <button type='submit' name='approve'>Approve</button>
+          <button type='submit' name='cancel'>Cancel</button>
+        </form>
+      </td>";
+      echo "</tr>";
+    }
+    } else {
+    echo "<tr><td colspan='6'>No bookings found</td></tr>";
+    }
+
+    $conn->close();
+    ?>
+    </tbody>
+  </table>
+  <button onclick="logout()">Logout</button>
+  <script src="scripts.js"></script>
+</div>
+</body>
+</html>
