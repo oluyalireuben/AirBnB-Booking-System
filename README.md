@@ -101,7 +101,7 @@ $mail->setFrom('your-email@gmail.com', 'AirBnB Booking System');
 
 5. Run the project:
 - Start your local server (Apache and MySQL) using XAMPP.
-- Open your browser and navigate to http://localhost/AirBnB_BookingSystem/.
+- Open your browser and navigate to http://localhost/projects/AirBnB_BokingSystem/
 
 
 ## Usage
